@@ -11,9 +11,19 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
-    <script src="jquery.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-    <script src="jquery.js"></script>
+<!--    <script src="jquery.js"></script>-->
+<!--    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>-->
+<!--    <script src="jquery.js"></script>-->
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+
+
     {#include menu}
     {/include}
 </head>
@@ -59,10 +69,10 @@
                     <form>
                     <tr id='addr0' data-id="0" class="hidden">
                         <td data-name="nombre">
-                            <input type="text" name='nombre' placeholder='Nombre' class="form-control"/>
+                            <input type="text" id="nombre" name="nombre" placeholder="Nombre" class="form-control"/>
                         </td>
                         <td data-name="tipoatributo">
-                            <select name="tipoatributo">
+                            <select name="tipoatributo" id="tipoatributo">
                                 <option value="">Select Option</option>
                                 <option value="String">String</option>
                                 <option value="Integer">Integer</option>
@@ -183,5 +193,47 @@
 
 
         $("#add_row").trigger("click");
+
+        $('#enviardatos').click(function () {
+            var arr = [];
+            var tname = $("#tname").val();
+            $('#tab_logic').find('tr').each(function (index) {
+                var row = $(this);
+
+                if (index !== 0) {
+                    var obj = {
+                        nombre:  row.find("#nombre").val(),
+                        tipoAtributo: row.find("#tipoatributo").val(),
+                        pkCheckcbox: row.find("#pkcheckbox").val() ? row.find("#pkcheckbox").val() : 0,
+                        notNullCheckbox: row.find("#notnullcheckbox").val() ? row.find("#notnullcheckbox").val() : 0 ,
+                        fkCheckbox: row.find("#fkcheckbox").val() ? row.find("#fkcheckbox").val() : 0,
+                    }
+                    arr.push(obj);
+                }
+
+            });
+
+            const data = {
+                nombreTabla : tname,
+                filas : arr
+            }
+            const jsonData = JSON.stringify(data);
+
+            $.ajax({
+                type: "POST",
+                url: '/api/form',
+                contentType: 'application/json',
+                data: jsonData,
+                dataType: 'json'
+            }).done(function(data) {
+                console.log("Data sent successfully");
+                console.log(data);
+            }).error(function (jqXhr, textStatus, errorMessage) {
+                console.log("Error sending data");
+                console.log(jqXhr);
+                console.log(errorMessage);
+                console.log(textStatus);
+            });
+        });
     });
 </script>

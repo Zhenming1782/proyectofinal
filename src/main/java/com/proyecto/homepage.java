@@ -1,17 +1,20 @@
 package com.proyecto;
 
+import Entities.Form;
+import Entities.FormValue;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
+import io.quarkus.qute.api.ResourcePath;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 @ApplicationScoped
 @Path("api")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class homepage {
     @Inject
     Template homepage;
@@ -29,9 +32,16 @@ public class homepage {
         return Form.data("title", "Table Creation");
     }
 
-//    @POST
-//    @Path("/form")
-//    public String CrearTable(){
-//
-//    }
+    @POST
+    @Path("/form")
+    public boolean CrearTable(FormValue formValue){
+        if (formValue != null) {
+            System.out.println(formValue.getNombreTabla());
+            for (Form form: formValue.getFilas()) {
+                System.out.println("nombre " + form.getNombre() + " -- tipo " + form.getTipoAtributo() + " -- pkchekbox "+ form.getFkCheckbox()
+                                + " -- not null " + form.getNotNullCheckbox() + "-- fk " + form.getFkCheckbox());
+            }
+        }
+        return true;
+    }
 }
