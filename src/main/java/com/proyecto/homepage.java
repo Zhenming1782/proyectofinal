@@ -38,8 +38,8 @@ public class homepage {
         if (formValue != null) {
             System.out.println(formValue.getNombreTabla());
             for (Form form: formValue.getFilas()) {
-                System.out.println("nombre " + form.getNombre() + " -- tipo " + form.getTipoAtributo() + " -- pkchekbox "+ form.getFkCheckbox()
-                                + " -- not null " + form.getNotNullCheckbox() + "-- fk " + form.getFkCheckbox());
+                System.out.println("nombre " + form.getNombre() + " -- tipo " + form.getTipoAtributo() + " -- pkchekbox "+ form.isPkCheckcbox()
+                                + " -- not null " + form.isNotNullCheckbox() + "-- fk " + form.isFkCheckbox());
             }
         }
         return true;

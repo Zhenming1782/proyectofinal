@@ -204,9 +204,9 @@
                     var obj = {
                         nombre:  row.find("#nombre").val(),
                         tipoAtributo: row.find("#tipoatributo").val(),
-                        pkCheckcbox: row.find("#pkcheckbox").val() ? row.find("#pkcheckbox").val() : 0,
-                        notNullCheckbox: row.find("#notnullcheckbox").val() ? row.find("#notnullcheckbox").val() : 0 ,
-                        fkCheckbox: row.find("#fkcheckbox").val() ? row.find("#fkcheckbox").val() : 0,
+                        pkCheckcbox: row.find("#pkcheckbox").is(':checked'),
+                        notNullCheckbox:  row.find("#notnullcheckbox").is(':checked') ,
+                        fkCheckbox: row.find("#fkcheckbox").is(':checked'),
                     }
                     arr.push(obj);
                 }

@@ -3,8 +3,9 @@ package Entities;
 public class Form {
     public String nombre;
     public String tipoAtributo;
-    public String pkCheckcbox;
-    public String notNullCheckbox;
+    public boolean pkCheckcbox;
+    public boolean notNullCheckbox;
+    public boolean fkCheckbox;
 
     public String getNombre() {
         return nombre;
@@ -22,29 +23,27 @@ public class Form {
         this.tipoAtributo = tipoAtributo;
     }
 
-    public String getPkCheckcbox() {
+    public boolean isPkCheckcbox() {
         return pkCheckcbox;
     }
 
-    public void setPkCheckcbox(String pkCheckcbox) {
+    public void setPkCheckcbox(boolean pkCheckcbox) {
         this.pkCheckcbox = pkCheckcbox;
     }
 
-    public String getNotNullCheckbox() {
+    public boolean isNotNullCheckbox() {
         return notNullCheckbox;
     }
 
-    public void setNotNullCheckbox(String notNullCheckbox) {
+    public void setNotNullCheckbox(boolean notNullCheckbox) {
         this.notNullCheckbox = notNullCheckbox;
     }
 
-    public String getFkCheckbox() {
+    public boolean isFkCheckbox() {
         return fkCheckbox;
     }
 
-    public void setFkCheckbox(String fkCheckbox) {
+    public void setFkCheckbox(boolean fkCheckbox) {
         this.fkCheckbox = fkCheckbox;
     }
-
-    public String fkCheckbox;
 }
