@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <script src="jquery.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="jquery.js"></script>
+    {#include menu}
+    {/include}
+</head>
+<body>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 table-responsive">
+                <form>
+                    <label for="tname">Table Name:</label><br>
+                    <input type="text" id="tname" name="tname"><br>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+                    <thead>
+                    <tr>
+                        <th class="text-center">
+                            Nombre
+                        </th>
+                        <th class="text-center">
+                            Tipo de dato
+                        </th>
+                        <th class="text-center">
+                            Primary Key
+                        </th>
+                        <th class="text-center">
+                            NOT NULL
+                        </th>
+                        <th class="text-center">
+                            FK
+                        </th>
+                        <th class="text-center" style="border-top: 1px solid #ffffff; border-right: 1px solid #ffffff;">
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--action="/action_page.php" method="post"-->
+                    <form>
+                    <tr id='addr0' data-id="0" class="hidden">
+                        <td data-name="nombre">
+                            <input type="text" name='nombre' placeholder='Nombre' class="form-control"/>
+                        </td>
+                        <td data-name="tipoatributo">
+                            <select name="tipoatributo">
+                                <option value="">Select Option</option>
+                                <option value="String">String</option>
+                                <option value="Integer">Integer</option>
+                                <option value="Double">Double</option>
+                                <option value="Boolean ">Boolean</option>
+                            </select>
+                        </td>
+                        <td data-name="pkcheckbox">
+                            <input type="checkbox" id="pkcheckbox" name="pkcheckbox" value="1">
+                        </td>
+                        <td data-name="notnullcheckbox">
+                            <input type="checkbox" id="notnullcheckbox" name="notnullcheckbox" value="1">
+                        </td>
+                        <td data-name="fkcheckbox">
+                            <input type="checkbox" id="fkcheckbox" name="fkcheckbox" value="1">
+                        </td>
+                    </form>
+                        <td data-name="del">
+                            <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span
+                                    aria-hidden="true">×</span></button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <a id="add_row" class="btn btn-primary float-right">Add Row</a>
+        </div>
+        <a id="enviardatos" class="btn btn-primary float-right">Create Table</a>
+</div>
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        $("#add_row").on("click", function () {
+// Dynamic Rows Code
+
+// Get max row id and set new id
+            var newid = 0;
+            $.each($("#tab_logic tr"), function () {
+                if (parseInt($(this).data("id")) > newid) {
+                    newid = parseInt($(this).data("id"));
+                }
+            });
+            newid++;
+            console.log(newid);
+
+            var tr = $("<tr></tr>", {
+                id: "addr" + newid,
+                "data-id": newid
+            })
+//    "data-id": newid
+            document.getElementById("addr" + newid);
+            setTimeout(() => {console.log(document.getElementById("addr" + newid))},500);
+
+// loop through each td and create new elements with name of newid
+            $.each($("#tab_logic tbody tr:nth(0) td"), function () {
+                var td;
+                var cur_td = $(this);
+
+                var children = cur_td.children();
+
+// add new td and element if it has a nane
+                if ($(this).data("name") !== undefined) {
+                    td = $("<td></td>", {
+                        "data-name": $(cur_td).data("name")
+                    });
+
+                    var c = $(cur_td).find($(children[0]).prop('tagName')).clone().val("");
+                    c.attr("name", $(cur_td).data("name") + newid);
+                    c.appendTo($(td));
+                    td.appendTo($(tr));
+                } else {
+                    td = $("<td></td>", {
+                        'text': $('#tab_logic tr').length
+                    }).appendTo($(tr));
+                }
+            });
+
+// add delete button and td
+            /*
+            $("<td></td>").append(
+            $("<button class='btn btn-danger glyphicon glyphicon-remove row-remove'></button>")
+            .click(function() {
+            $(this).closest("tr").remove();
+            })
+            ).appendTo($(tr));
+            */
+
+// add the new row
+            $(tr).appendTo($('#tab_logic'));
+
+            $(tr).find("td button.row-remove").on("click", function () {
+                $(this).closest("tr").remove();
+                newid-1;
+                console.log(newid);
+            });
+        });
+
+
+// Sortable Code
+        var fixHelperModified = function (e, tr) {
+            var $originals = tr.children();
+            var $helper = tr.clone();
+
+            $helper.children().each(function (index) {
+                $(this).width($originals.eq(index).width())
+            });
+
+            return $helper;
+        };
+
+        $(".table-sortable tbody").sortable({
+            helper: fixHelperModified
+        }).disableSelection();
+
+        $(".table-sortable thead").disableSelection();
+
+
+        $("#add_row").trigger("click");
+    });
+</script>
