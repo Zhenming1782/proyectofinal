@@ -16,10 +16,21 @@
             crossorigin="anonymous"></script>
     <style>
         body {
-            background-image: image('backgroundcomputer.jpeg');
+            background-image: url("https://www.data-recovery-service.eu/attachments/Image/Startseite-02_1.jpg");
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: 100% 100%;
+        }
+
+        #input-create {
+            display: inline-block !important;
+            width:200px;
+            max-width:500px;
+            margin: 20px;
+        }
+
+        #button-create {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -29,8 +40,9 @@
 <div>
     <div class="w3-container w3-center">
         <form id="CreateName">
-            <input class="w3-center w3-input w3-animate-input" name="name" type="text" placeholder="Application Name" style="width:100px;max-width:500px">
-            <button class="w3-button w3-blue" type="submit">Crear</button>
+            <input class="w3-center w3-input w3-animate-input" id="input-create" name="name" type="text" placeholder="Application Name" >
+            <br>
+            <button class="w3-button w3-blue" id="button-create" type="submit">Crear</button>
         </form>
 
     </div>
