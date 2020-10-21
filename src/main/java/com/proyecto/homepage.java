@@ -10,6 +10,7 @@ import org.jboss.resteasy.plugins.server.servlet.HttpServletResponseWrapper;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.management.Query;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -24,6 +25,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import java.sql.*;
+
 @ApplicationScoped
 @Path("api")
 @Produces(MediaType.APPLICATION_JSON)
@@ -35,6 +38,8 @@ public class homepage {
     Template Form;
     @Inject
     Template ApplicationName;
+    @Inject
+    Template DBName;
 
 
     String nombre = "";
@@ -225,6 +230,57 @@ public class homepage {
 
         return Response.ok().build();
 
+    }
+
+    @GET
+    @Path("/db")
+    public TemplateInstance DBHomePage(){
+
+        return DBName.data("title","TablaInfo");
+    };
+
+    @POST
+    @Path("/db")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_PLAIN)
+    public boolean GetTableInfo(@FormParam("name") String TableName){
+      //  String DBName = "employees";
+        System.out.println(TableName);
+        try{
+            //Get Connection to DB
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection myconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/employees","root","12345678");
+
+            //Create a Statement
+            Statement dictoStatement = myconnection.createStatement();
+            System.out.println("Conectado correctamente a la Base de Datos");
+
+            String QueryDic =
+                    "SELECT\n" +
+                            "tb.COLUMN_NAME AS Field_Name,\n" +
+                            "tb.COLUMN_TYPE AS Data_Type,\n" +
+                            "tb.IS_NULLABLE AS Allow_Empty,\n" +
+                            "tb.COLUMN_KEY AS PK,\n" +
+                            "tb.EXTRA AS Extra,\n" +
+                            "tb.COLUMN_COMMENT AS Field_Description \n" +
+                            "FROM\n"+
+                            "`INFORMATION_SCHEMA`.`COLUMNS` as tb\n"+
+                            "WHERE\n"+
+                            "TABLE_NAME = '"+TableName+"'";
+
+            //Execute SQL query
+            ResultSet myRs =  dictoStatement.executeQuery(QueryDic);
+            //Process the result set
+            while(myRs.next())
+                System.out.println(myRs.getString("Field_Name") + "," + myRs.getString("Data_Type")+ "," + myRs.getString("Allow_Empty")+ "," + myRs.getString("PK")+ "," + myRs.getString("Extra"));
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+//        return Response.ok().build();
+        return true;
     }
 
     @GET

@@ -39,10 +39,10 @@
 {/include}
 <div>
     <div class="w3-container w3-center">
-        <form id="CreateName">
-            <input class="w3-center w3-input w3-animate-input" id="input-create" name="name" type="text" placeholder="Application Name" >
+        <form id="FindTable">
+            <input class="w3-center w3-input w3-animate-input" id="input-create" name="name" type="text" placeholder="Table Name">
             <br>
-            <button class="w3-button w3-blue" id="button-create" type="submit">Crear</button>
+            <button class="w3-button w3-blue" id="button-create" type="submit" onclick="function()">Buscar</button>
         </form>
 
     </div>
@@ -53,21 +53,23 @@
 </body>
 </html>
 <script>
-    $("#CreateName").submit(function(e) {
 
+    $("#FindTable").submit(function(e) {
+        alert("Button Working!");
         e.preventDefault(); // avoid to execute the actual submit of the form.
 
         var form = $(this);
         // var url = form.attr('action');
-
+        alert(form.serialize());
         $.ajax({
             type: "POST",
-            url: '/api/create',
+            url: '/api/db/',
             data: form.serialize(), // serializes the form's elements.
             success: function(data)
             {
                 alert(data); // show response from the php script.
-                window.location.href="/api/db";
+                // window.location.href="/api/form";
+                window.location.reload();
             }
         });
     });
