@@ -5,6 +5,7 @@ public class Form {
     public String tipoAtributo;
     public boolean pkCheckcbox;
     public boolean notNullCheckbox;
+    public boolean CheckBoxUnique;
     public boolean fkCheckbox;
 
     public String getNombre() {
@@ -37,6 +38,14 @@ public class Form {
 
     public void setNotNullCheckbox(boolean notNullCheckbox) {
         this.notNullCheckbox = notNullCheckbox;
+    }
+
+    public boolean isCheckBoxUnique() {
+        return CheckBoxUnique;
+    }
+
+    public void setCheckBoxUnique(boolean checkBoxUnique) {
+        CheckBoxUnique = checkBoxUnique;
     }
 
     public boolean isFkCheckbox() {

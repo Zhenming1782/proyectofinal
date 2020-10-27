@@ -55,6 +55,9 @@
                         <th class="text-center">
                             NOT NULL
                         </th>
+                        <th class="text-center">
+                            UNIQUE
+                        </th>
 <!--                        <th class="text-center">-->
 <!--                            FK-->
 <!--                        </th>-->
@@ -83,6 +86,9 @@
                         </td>
                         <td data-name="notnullcheckbox">
                             <input type="checkbox" id="notnullcheckbox" name="notnullcheckbox" value="1">
+                        </td>
+                        <td data-name="uniquecheckbox">
+                            <input type="checkbox" id="uniquecheckbox" name="uniquecheckbox" value="1">
                         </td>
 <!--                        <td data-name="fkcheckbox">-->
 <!--                            <input type="checkbox" id="fkcheckbox" name="fkcheckbox" value="1">-->
@@ -205,6 +211,7 @@
                         tipoAtributo: row.find("#tipoatributo").val(),
                         pkCheckcbox: row.find("#pkcheckbox").is(':checked'),
                         notNullCheckbox:  row.find("#notnullcheckbox").is(':checked') ,
+                        CheckBoxUnique:  row.find("#uniquecheckbox").is(':checked') ,
                         // fkCheckbox: row.find("#fkcheckbox").is(':checked'),
                     }
                     arr.push(obj);
@@ -235,28 +242,28 @@
             });
         });
         $('#createapp').click(function () {
-            var arr = [];
-            var tname = $("#tname").val();
-            $('#tab_logic').find('tr').each(function (index) {
-                var row = $(this);
-
-                if (index !== 0) {
-                    var obj = {
-                        nombre:  row.find("#nombre").val(),
-                        tipoAtributo: row.find("#tipoatributo").val(),
-                        pkCheckcbox: row.find("#pkcheckbox").is(':checked'),
-                        notNullCheckbox:  row.find("#notnullcheckbox").is(':checked') ,
-                        // fkCheckbox: row.find("#fkcheckbox").is(':checked'),
-                    }
-                    arr.push(obj);
-                }
-            });
-
-            const data = {
-                nombreTabla : tname,
-                filas : arr
-            }
-            const jsonData = JSON.stringify(data);
+            // var arr = [];
+            // var tname = $("#tname").val();
+            // $('#tab_logic').find('tr').each(function (index) {
+            //     var row = $(this);
+            //
+            //     if (index !== 0) {
+            //         var obj = {
+            //             nombre:  row.find("#nombre").val(),
+            //             tipoAtributo: row.find("#tipoatributo").val(),
+            //             pkCheckcbox: row.find("#pkcheckbox").is(':checked'),
+            //             notNullCheckbox:  row.find("#notnullcheckbox").is(':checked') ,
+            //             // fkCheckbox: row.find("#fkcheckbox").is(':checked'),
+            //         }
+            //         arr.push(obj);
+            //     }
+            // });
+            //
+            // const data = {
+            //     nombreTabla : tname,
+            //     filas : arr
+            // }
+            // const jsonData = JSON.stringify(data);
 
             $.ajax({
                 type: "POST",
