@@ -20,6 +20,15 @@ public class Form {
         return tipoAtributo;
     }
 
+    public Form(String nombre, String tipoAtributo, boolean pkCheckcbox, boolean notNullCheckbox, boolean checkBoxUnique, boolean fkCheckbox) {
+        this.nombre = nombre;
+        this.tipoAtributo = tipoAtributo;
+        this.pkCheckcbox = pkCheckcbox;
+        this.notNullCheckbox = notNullCheckbox;
+        CheckBoxUnique = checkBoxUnique;
+        this.fkCheckbox = fkCheckbox;
+    }
+
     public void setTipoAtributo(String tipoAtributo) {
         this.tipoAtributo = tipoAtributo;
     }

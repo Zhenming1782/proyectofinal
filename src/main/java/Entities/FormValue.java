@@ -10,6 +10,11 @@ public class FormValue {
         return nombreTabla;
     }
 
+    public FormValue(String nombreTabla, ArrayList<Form> filas) {
+        this.nombreTabla = nombreTabla;
+        this.filas = filas;
+    }
+
     public void setNombreTabla(String nombreTabla) {
         this.nombreTabla = nombreTabla;
     }

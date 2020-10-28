@@ -1,14 +1,19 @@
 package com.proyecto;
 
+import Entities.Data;
 import Entities.Form;
 import Entities.FormValue;
+import com.sun.corba.se.impl.protocol.giopmsgheaders.FragmentMessage;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import io.quarkus.qute.api.ResourcePath;
+import io.quarkus.runtime.Startup;
+import io.quarkus.runtime.StartupEvent;
 import org.jboss.resteasy.plugins.server.servlet.HttpServletResponseWrapper;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.management.Query;
 import javax.ws.rs.*;
@@ -24,10 +29,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import org.jboss.logging.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Optional;
+
 
 @ApplicationScoped
+@Startup
 @Path("api")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -37,12 +47,20 @@ public class homepage {
     @Inject
     Template Form;
     @Inject
+    Template FormUpdate;
+    @Inject
     Template ApplicationName;
     @Inject
     Template DBName;
     @Inject
     Template Tablesname;
 
+    private static final Logger LOGGER = Logger.getLogger("ListenerBean");
+
+    void onStart(@Observes StartupEvent ev) {
+        LOGGER.info("The application is starting...");
+        Data.fillList();
+    }
 
     String nombre = "";
     String databasename_g;
@@ -51,6 +69,7 @@ public class homepage {
     public TemplateInstance Homepage() {
         return homepage.data("title", "API Creation");
     }
+
 
     @GET
     @Path("/create")
@@ -262,31 +281,33 @@ public class homepage {
     //Aqui muestro todas las tablas para mandarla a la vista.
     public TemplateInstance ShowallTables() {
         //Databasename_g Variable Global para guardar el nombre de la base de datos!!
-        try {
-            //Get Connection to DB
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection myconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + databasename_g, "root", "12345678");
-
-            //Create a Statement
-            Statement dictoStatement = myconnection.createStatement();
-            System.out.println("Conectado correctamente a la Base de Datos antes de show all tables");
-            String queryalltables = "SELECT table_name\n" +
-                            "FROM information_schema.tables\n" +
-                            "WHERE table_schema ='" + databasename_g +"'"+
-                            "\nORDER BY table_name;";
-
-
-            //Execute SQL query
-//        System.out.println(queryalltables);
-            ResultSet myRs = dictoStatement.executeQuery(queryalltables);
-            //Process the result set
-            while (myRs.next()) {
-                System.out.println(myRs.getString("table_name"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Tablesname.data("title", "Table List");
+//        try {
+//            //Get Connection to DB
+////            Class.forName("com.mysql.cj.jdbc.Driver");
+////            Connection myconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + databasename_g, "root", "12345678");
+////
+////            //Create a Statement
+////            Statement dictoStatement = myconnection.createStatement();
+////            System.out.println("Conectado correctamente a la Base de Datos antes de show all tables");
+////            String queryalltables = "SELECT table_name\n" +
+////                            "FROM information_schema.tables\n" +
+////                            "WHERE table_schema ='" + databasename_g +"'"+
+////                            "\nORDER BY table_name;";
+//
+//
+//            //Execute SQL query
+////        System.out.println(queryalltables);
+//            ResultSet myRs = dictoStatement.executeQuery(queryalltables);
+//            //Process the result set
+//            while (myRs.next()) {
+//                System.out.println(myRs.getString("table_name"));
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        return Tablesname.data("tablas", Data.tablas);
+//        return Tablesname.data("title", "table list");
     }
     
 
@@ -567,6 +588,20 @@ public class homepage {
     public TemplateInstance TableCreation() {
 
         return Form.data("title", "Table Creation");
+    }
+
+    @GET
+    @Path("/form/update/{nombre}")
+    public TemplateInstance TableUpdate(@PathParam("nombre") String name) {
+//        FormValue form = Data.tablas.stream().filter(o -> o.nombreTabla.equals(nombre)).findFirst().orElse(null);
+        FormValue tabla = null;
+        for (FormValue formvalue : Data.tablas) {
+            if (formvalue.nombreTabla.equals(name)) {
+                tabla = formvalue;
+            }
+        }
+
+        return FormUpdate.data("tablaDetalle", tabla).data("tipoAtributos", Data.obtenerAtributos());
     }
 
     @POST
