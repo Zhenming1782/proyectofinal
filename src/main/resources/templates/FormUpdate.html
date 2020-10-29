@@ -136,9 +136,9 @@
 
                                 <td data-name="uniquecheckbox">
                                     {#if item.CheckBoxUnique == true}
-                                        <input type="checkbox" name="uniquecheckbox" checked value="{item.CheckBoxUnique == true ?: 1}">
+                                        <input type="checkbox" id="uniquecheckbox{count}" name="uniquecheckbox" checked value="{item.CheckBoxUnique == true ?: 1}">
                                     {#else}
-                                        <input type="checkbox" name="uniquecheckbox">
+                                        <input type="checkbox" id="uniquecheckbox{count}{count}" name="uniquecheckbox">
                                     {/if}
                                 </td>
 
