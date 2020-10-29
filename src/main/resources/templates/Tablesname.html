@@ -60,8 +60,8 @@
     {#if tablas}
         {#for tabla in tablas}
             <tr>
-                <td>{tabla.nombreTabla}</td>
-                <td><a href="/api/form/update/{tabla.nombreTabla}">Ver</a></td>
+                <td>{tabla}</td>
+                <td><a href="/api/form/update/{tabla}">Ver</a></td>
                 <td><input type="checkbox"></td>
             </tr>
         {/for}

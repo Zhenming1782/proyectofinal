@@ -3,10 +3,14 @@ package Entities;
 public class Form {
     public String nombre;
     public String tipoAtributo;
+    public String valortipoAtributo;
     public boolean pkCheckcbox;
     public boolean notNullCheckbox;
     public boolean CheckBoxUnique;
     public boolean fkCheckbox;
+
+    public Form() {
+    }
 
     public String getNombre() {
         return nombre;
@@ -18,6 +22,14 @@ public class Form {
 
     public String getTipoAtributo() {
         return tipoAtributo;
+    }
+
+    public String getValortipoAtributo() {
+        return valortipoAtributo;
+    }
+
+    public void setValortipoAtributo(String valortipoAtributo) {
+        this.valortipoAtributo = valortipoAtributo;
     }
 
     public Form(String nombre, String tipoAtributo, boolean pkCheckcbox, boolean notNullCheckbox, boolean checkBoxUnique, boolean fkCheckbox) {

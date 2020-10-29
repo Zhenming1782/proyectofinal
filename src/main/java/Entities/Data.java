@@ -33,6 +33,8 @@ public class Data {
         tipoAtributos.add("Integer");
         tipoAtributos.add("Boolean");
         tipoAtributos.add("Double");
+        tipoAtributos.add("Date");
+        tipoAtributos.add("Enum");
 
         return tipoAtributos;
     }

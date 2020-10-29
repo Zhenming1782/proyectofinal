@@ -74,11 +74,9 @@
                         </td>
                         <td data-name="tipoatributo">
                             <select name="tipoatributo" id="tipoatributo">
-                                <option value="">Select Option</option>
-                                <option value="String">String</option>
-                                <option value="Integer">Integer</option>
-                                <option value="Double">Double</option>
-                                <option value="Boolean ">Boolean</option>
+                                {#for tipo in tipoAtributos}
+                                    <option value="{tipo}">{tipo}</option>
+                                {/for}
                             </select>
                         </td>
                         <td data-name="pkcheckbox">

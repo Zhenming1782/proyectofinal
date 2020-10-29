@@ -15,6 +15,9 @@ public class FormValue {
         this.filas = filas;
     }
 
+    public FormValue() {
+    }
+
     public void setNombreTabla(String nombreTabla) {
         this.nombreTabla = nombreTabla;
     }
