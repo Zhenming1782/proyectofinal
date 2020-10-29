@@ -103,7 +103,7 @@
                         {#for item in tablaDetalle.filas}
                             <tr>
                                 <td data-name="nombre">
-                                    <input type="text" id="nombre" name="nombre" placeholder="Nombre" value="{item.nombre}" class="form-control"/>
+                                    <input type="text" id="nombre{count}" name="nombre" placeholder="Nombre" value="{item.nombre}" class="form-control"/>
                                 </td>
                                 <td data-name="tipoatributo">
                                     <select name="tipoatributo" id="tipoatributo">
@@ -263,14 +263,13 @@
             var tname = $("#tname").val();
             $('#tab_logic').find('tr').each(function (index) {
                 var row = $(this);
-
                 if (index !== 0) {
                     var obj = {
-                        nombre:  row.find("#nombre").val(),
+                        nombre:  row.find("#nombre"+index).val(),
                         tipoAtributo: row.find("#tipoatributo").val(),
-                        pkCheckcbox: row.find(".pkcheckbox").is(':checked'),
-                        notNullCheckbox:  row.find(".notnullcheckbox").is(':checked') ,
-                        CheckBoxUnique:  row.find(".uniquecheckbox").is(':checked') ,
+                        pkCheckcbox: row.find("#pkcheckbox"+index)? row.find("#pkcheckbox"+index).is(':checked') : row.find("#pkcheckbox"+index+""+index).is(':checked'),
+                        notNullCheckbox: row.find("#notnullcheckbox"+index)? row.find("#notnullcheckbox"+index).is(':checked') : row.find("#notnullcheckbox"+index+""+index).is(':checked'),
+                        CheckBoxUnique: row.find("#uniquecheckbox"+index)? row.find("#uniquecheckbox"+index).is(':checked') : row.find("#uniquecheckbox"+index+""+index).is(':checked'),
                         // fkCheckbox: row.find("#fkcheckbox").is(':checked'),
                     }
                     arr.push(obj);
