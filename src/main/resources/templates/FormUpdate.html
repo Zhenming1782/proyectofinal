@@ -103,7 +103,7 @@
                         {#for item in tablaDetalle.filas}
                             <tr>
                                 <td data-name="nombre">
-                                    <input type="text" name="nombre" placeholder="Nombre" value="{item.nombre}" class="form-control"/>
+                                    <input type="text" id="nombre" name="nombre" placeholder="Nombre" value="{item.nombre}" class="form-control"/>
                                 </td>
                                 <td data-name="tipoatributo">
                                     <select name="tipoatributo" id="tipoatributo">
@@ -266,8 +266,8 @@
 
                 if (index !== 0) {
                     var obj = {
-                        nombre:  row.find(".nombre").val(),
-                        tipoAtributo: row.find(".tipoatributo").val(),
+                        nombre:  row.find("#nombre").val(),
+                        tipoAtributo: row.find("#tipoatributo").val(),
                         pkCheckcbox: row.find(".pkcheckbox").is(':checked'),
                         notNullCheckbox:  row.find(".notnullcheckbox").is(':checked') ,
                         CheckBoxUnique:  row.find(".uniquecheckbox").is(':checked') ,
