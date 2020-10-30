@@ -63,7 +63,7 @@ public class homepage {
     }
 
     String nombre = "";
-    String databasename_g ="employees";
+    String databasename_g;
 
     @GET
     public TemplateInstance Homepage() {
@@ -258,7 +258,7 @@ public class homepage {
     }
 
     @GET
-    @Path("/db/name")
+    @Path("/db")
     //Vista para el input para introducir el nombre de la DB!
     public TemplateInstance DBNameView() {
 
@@ -266,7 +266,7 @@ public class homepage {
     }
 
     @POST
-    @Path("/db/name")
+    @Path("/db")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
     //Funcion para leer el nombre de la base de datos!
@@ -290,7 +290,7 @@ public class homepage {
 
             //Create a Statement
             Statement dictoStatement = myconnection.createStatement();
-            System.out.println("Conectado correctamente a la Base de Datos antes de show all tables");
+//            System.out.println("Conectado correctamente a la Base de Datos antes de show all tables");
             String queryalltables = "SELECT table_name\n" +
                             "FROM information_schema.tables\n" +
                             "WHERE table_schema ='" + databasename_g +"'"+
@@ -305,7 +305,7 @@ public class homepage {
             //Process the result set
             while (myRs.next()) {
                 nombres.add(myRs.getString("table_name"));
-                System.out.println(myRs.getString("table_name"));
+//                System.out.println(myRs.getString("table_name"));
             }
 
         } catch (Exception e) {
@@ -608,7 +608,7 @@ public class homepage {
 
         //Create a Statement
         Statement dictoStatement = myconnection.createStatement();
-        System.out.println("Conectado correctamente a la Base de Datos Tabla Details");
+//        System.out.println("Conectado correctamente a la Base de Datos Tabla Details");
 
         String QueryDic =
                 "SELECT\n" +
@@ -630,7 +630,7 @@ public class homepage {
         //Process the result set
              ArrayList<Form> detalles  = new ArrayList<>();
         while(myRs.next()){
-            System.out.println(myRs.getString("Field_Name") + "," + myRs.getString("Data_Type")+ "," + myRs.getString("Allow_Empty")+ "," + myRs.getString("PK")+ "," + myRs.getString("Extra"));
+//            System.out.println(myRs.getString("Field_Name") + "," + myRs.getString("Data_Type")+ "," + myRs.getString("Allow_Empty")+ "," + myRs.getString("PK")+ "," + myRs.getString("Extra"));
             Form fila = new Form();
             fila.nombre = myRs.getString("Field_Name");
             if (myRs.getString("Data_Type").startsWith("tinyint")) {
@@ -643,6 +643,8 @@ public class homepage {
                 fila.tipoAtributo = "Date";
             }else if (myRs.getString("Data_Type").startsWith("enum")) {
                 fila.tipoAtributo = "Enum";
+            }else if (myRs.getString("Data_Type").startsWith("char")) {
+                fila.tipoAtributo = "String";
             }
             fila.valortipoAtributo = myRs.getString("Data_Type");
             fila.notNullCheckbox = myRs.getString("Allow_Empty").equals("NO");
@@ -678,6 +680,7 @@ public class homepage {
 //                    + " -- not null " + form.isNotNullCheckbox() + " -- Unique" + form.isCheckBoxUnique());
 ////            + form.isFkCheckbox()
 //        }
+
         String nomb;
         String clase;
         String atributo;
@@ -706,8 +709,8 @@ public class homepage {
 
             //Entity details
             for (Form form : formValue.getFilas()) {
-                System.out.println("nombre " + form.getNombre() + " -- tipo " + form.getTipoAtributo() + " -- pkchekbox " + form.isPkCheckcbox()
-                        + " -- not null " + form.isNotNullCheckbox() + "-- fk " + form.isCheckBoxUnique() +"--Unique" + form.isFkCheckbox());
+//                System.out.println("nombre " + form.getNombre() + " -- tipo " + form.getTipoAtributo() + " -- pkchekbox " + form.isPkCheckcbox()
+//                        + " -- not null " + form.isNotNullCheckbox() + "-- fk " + form.isCheckBoxUnique() +"--Unique" + form.isFkCheckbox());
 
 
                 ///////////////////////////////////
