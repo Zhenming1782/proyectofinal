@@ -20,8 +20,11 @@
             src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
             integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
             crossorigin="anonymous"></script>
-
-
+<style>
+    #relationhidden{
+        display: none;
+    }
+</style>
     {#include menu}
     {/include}
 </head>
@@ -33,7 +36,6 @@
                     <label for="tname">Table Name:</label><br>
                     <input type="text" id="tname" name="tname"><br>
                 </form>
-
             </div>
         </div>
     </div>
@@ -44,12 +46,14 @@
                     <thead>
                     <tr>
                         <th class="text-center">
-                            Nombre
+                            Name
                         </th>
                         <th class="text-center">
-                            Tipo de dato
+                            Data type
                         </th>
+
                         <th class="text-center">
+                            <p id="text" style="color: red;font-size:50%">Primary Key will auto generated</p>
                             Primary Key
                         </th>
                         <th class="text-center">
@@ -58,9 +62,9 @@
                         <th class="text-center">
                             UNIQUE
                         </th>
-<!--                        <th class="text-center">-->
-<!--                            FK-->
-<!--                        </th>-->
+                        <th class="text-center">
+                            Foreign Key
+                        </th>
                         <th class="text-center" style="border-top: 1px solid #ffffff; border-right: 1px solid #ffffff;">
                         </th>
                     </tr>
@@ -80,7 +84,7 @@
                             </select>
                         </td>
                         <td data-name="pkcheckbox">
-                            <input type="checkbox" id="pkcheckbox" name="pkcheckbox" value="1">
+                            <input type="checkbox" id="pkcheckbox" name="pkcheckbox" value="1" onclick="myFunction()">
                         </td>
                         <td data-name="notnullcheckbox">
                             <input type="checkbox" id="notnullcheckbox" name="notnullcheckbox" value="1">
@@ -88,9 +92,19 @@
                         <td data-name="uniquecheckbox">
                             <input type="checkbox" id="uniquecheckbox" name="uniquecheckbox" value="1">
                         </td>
-<!--                        <td data-name="fkcheckbox">-->
-<!--                            <input type="checkbox" id="fkcheckbox" name="fkcheckbox" value="1">-->
-<!--                        </td>-->
+                        <td data-name="fkoption">
+                            <select name="fkoption" id="fkoption" onchange="showDiv('relationhidden', this)">
+                                <option value="0">None</option>
+                                <option value="Table1">Table1</option>
+                                <option value="Table2">Table2</option>
+                            </select>
+                        </td>
+                        <td data-name="relationoption">
+                        <select id="relationhidden">
+                            <option value="One to One">One to One</option>
+                            <option value="One to Many">One to Many</option>
+                        </select>
+                        </td>
                     </form>
                         <td data-name="del">
                             <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span
@@ -109,6 +123,22 @@
 </body>
 </html>
 <script>
+    //FK show relation select
+    function showDiv(divId, element)
+    {
+        document.getElementById(divId).style.display = element.value != 0 ? 'block' : 'none';
+    }
+
+    //Primary Key check show the text
+    function myFunction() {
+        var checkBox = document.getElementById("pkcheckbox");
+        var text = document.getElementById("text");
+        if (checkBox.checked == false){
+            text.style.display = "block";
+        } else {
+            text.style.display = "none";
+        }
+    }
     $(document).ready(function () {
         $("#add_row").on("click", function () {
 // Dynamic Rows Code

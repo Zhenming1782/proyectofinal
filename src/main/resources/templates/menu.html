@@ -4,6 +4,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -83,10 +91,10 @@
     <div class="subnav">
         <button class="subnavbtn"><i class="fas fa-server"></i>Create APP <i class="fa fa-caret-down"></i></button>
         <div class="subnav-content">
-            <a href="/api/create">Empty Server</a>
-            <a href="#deliver">Server Auth</a>
+            <a href="/api/create"onClick="deleteCookie();SetCookie('OptionCookie','EmptyServer','1');">Empty Server</a>
+            <a href="#deliver"onClick="deleteCookie();SetCookie('OptionCookie','ServerAuth','1')">Server Auth</a>
             <a href="#package">Microservice</a>
-            <a href="/api/create"><i class="fas fa-database"></i>Import Database</a>
+            <a href="/api/create"onClick="deleteCookie();SetCookie('OptionCookie','Database','1')"><i class="fas fa-database"></i>Import Database</a>
         </div>
     </div>
     <div class="subnav">
@@ -95,10 +103,27 @@
             <a href="#link1">Link 1</a>
             <a href="#link2">Link 2</a>
             <a href="#link3">Link 3</a>
-            <a href="#link4">Link 4</a>
+            <a href="#link4"onclick="Prueba()">Link 4</a>
         </div>
     </div>
     <a href="#contact">Contact</a>
 </div>
 </body>
 </html>
+
+<script>
+    function deleteCookie() {
+        document.cookie = "OptionCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        document.cookie = "OptionCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/api;";
+    }
+    // path=/api;
+    // deleteCookie()
+    function SetCookie(c_name,value,expiredays)
+    {
+        deleteCookie()
+        var exdate=new Date()
+        exdate.setDate(exdate.getDate()+expiredays)
+        document.cookie=c_name+ "=" +escape(value)+
+            ((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+    }
+</script>

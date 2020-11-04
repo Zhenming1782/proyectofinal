@@ -53,6 +53,27 @@
 </body>
 </html>
 <script>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    var optionCookie = getCookie("OptionCookie");
+
+    function Prueba(){
+        // deleteCookie()
+        alert(optionCookie);
+    }
     $("#CreateName").submit(function(e) {
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
