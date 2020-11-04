@@ -282,37 +282,47 @@ public class homepage {
     public TemplateInstance ShowallTables() {
 
 //      Databasename_g; Variable Global para guardar el nombre de la base de datos!!
-        ArrayList<String> nombres = new ArrayList<>();
-        try {
-//            Get Connection to DB
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection myconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + databasename_g, "root", "12345678");
-
-            //Create a Statement
-            Statement dictoStatement = myconnection.createStatement();
+//        ArrayList<String> nombres = new ArrayList<>();
+//        try {
+////            Get Connection to DB
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Connection myconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + databasename_g, "root", "12345678");
+//
+//            //Create a Statement
+//            Statement dictoStatement = myconnection.createStatement();
 //            System.out.println("Conectado correctamente a la Base de Datos antes de show all tables");
-            String queryalltables = "SELECT table_name\n" +
-                            "FROM information_schema.tables\n" +
-                            "WHERE table_schema ='" + databasename_g +"'"+
-                            "\nORDER BY table_name;";
-
-
-            //Execute SQL query
-//        System.out.println(queryalltables);
-            ResultSet myRs = dictoStatement.executeQuery(queryalltables);
-//             nombres = myRs.getArray("table_name").;
-//            ArrayList<String> nombres = new ArrayList<>();
-            //Process the result set
-            while (myRs.next()) {
-                nombres.add(myRs.getString("table_name"));
+//            String queryalltables = "SELECT table_name\n" +
+//                            "FROM information_schema.tables\n" +
+//                            "WHERE table_schema ='" + databasename_g +"'"+
+//                            "\nORDER BY table_name;";
+//
+//
+//            //Execute SQL query
+////        System.out.println(queryalltables);
+//            ResultSet myRs = dictoStatement.executeQuery(queryalltables);
+////             nombres = myRs.getArray("table_name").;
+////            ArrayList<String> nombres = new ArrayList<>();
+//            //Process the result set
+//            while (myRs.next()) {
+//                nombres.add(myRs.getString("table_name"));
 //                System.out.println(myRs.getString("table_name"));
-            }
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        return Tablesname.data("tablas", Data.tablas);
-        return Tablesname.data("tablas", nombres);
+//        String path = System.getProperty("user.dir");
+//        for (FormValue formValue : Data.tablas) {
+//            String clase = formValue.getNombreTabla().substring(0, 1).toUpperCase() + formValue.getNombreTabla().substring(1).toLowerCase();
+//            File myObj = new File(path + "/" + nombre + "/src/main/java/org/proyecto/Entity/" + clase + ".java");
+//            if (myObj.exists()){
+//                formValue.creado = true;
+//            }
+//        }
+
+        return Tablesname.data("tablas", Data.tablas);
+//        return Tablesname.data("tablas", nombres);
 //        return Tablesname.data("title", "table list");
     }
     
@@ -592,7 +602,6 @@ public class homepage {
     @GET
     @Path("/form")
     public TemplateInstance TableCreation() {
-
         return Form.data("title", "Table Creation").data("tipoAtributos", Data.obtenerAtributos());
     }
 
@@ -600,76 +609,123 @@ public class homepage {
     @Path("/form/update/{nombre}")
     public TemplateInstance TableUpdate(@PathParam("nombre") String name) {
 //        FormValue form = Data.tablas.stream().filter(o -> o.nombreTabla.equals(nombre)).findFirst().orElse(null);
-        FormValue detalle = new FormValue();
-        try{
-        //Get Connection to DB
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection myconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/employees","root","12345678");
-
-        //Create a Statement
-        Statement dictoStatement = myconnection.createStatement();
+//        FormValue detalle = new FormValue();
+//        try{
+//        //Get Connection to DB
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//        Connection myconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/employees","root","12345678");
+//
+//        //Create a Statement
+//        Statement dictoStatement = myconnection.createStatement();
 //        System.out.println("Conectado correctamente a la Base de Datos Tabla Details");
-
-        String QueryDic =
-                "SELECT\n" +
-                        "tb.COLUMN_NAME AS Field_Name,\n" +
-                        "tb.COLUMN_TYPE AS Data_Type,\n" +
-                        "tb.IS_NULLABLE AS Allow_Empty,\n" +
-                        "tb.COLUMN_KEY AS PK,\n" +
-                        "tb.EXTRA AS Extra,\n" +
-                        "tb.COLUMN_COMMENT AS Field_Description \n" +
-                        "FROM\n"+
-                        "`INFORMATION_SCHEMA`.`COLUMNS` as tb\n"+
-                        "WHERE\n"+
-                        "TABLE_NAME = '"+name+"'"+
-                        "AND table_schema ='"+ databasename_g+"'";
-//            System.out.println(QueryDic);
-
-        //Execute SQL query
-        ResultSet myRs =  dictoStatement.executeQuery(QueryDic);
-        //Process the result set
-             ArrayList<Form> detalles  = new ArrayList<>();
-        while(myRs.next()){
+//
+//        String QueryDic =
+//                "SELECT\n" +
+//                        "tb.COLUMN_NAME AS Field_Name,\n" +
+//                        "tb.COLUMN_TYPE AS Data_Type,\n" +
+//                        "tb.IS_NULLABLE AS Allow_Empty,\n" +
+//                        "tb.COLUMN_KEY AS PK,\n" +
+//                        "tb.EXTRA AS Extra,\n" +
+//                        "tb.COLUMN_COMMENT AS Field_Description \n" +
+//                        "FROM\n"+
+//                        "`INFORMATION_SCHEMA`.`COLUMNS` as tb\n"+
+//                        "WHERE\n"+
+//                        "TABLE_NAME = '"+name+"'"+
+//                        "AND table_schema ='"+ databasename_g+"'";
+////            System.out.println(QueryDic);
+//
+//        //Execute SQL query
+//        ResultSet myRs =  dictoStatement.executeQuery(QueryDic);
+//        //Process the result set
+//             ArrayList<Form> detalles  = new ArrayList<>();
+//        while(myRs.next()){
 //            System.out.println(myRs.getString("Field_Name") + "," + myRs.getString("Data_Type")+ "," + myRs.getString("Allow_Empty")+ "," + myRs.getString("PK")+ "," + myRs.getString("Extra"));
-            Form fila = new Form();
-            fila.nombre = myRs.getString("Field_Name");
-            if (myRs.getString("Data_Type").startsWith("tinyint")) {
-                fila.tipoAtributo = "Boolean";
-            } else if (myRs.getString("Data_Type").startsWith("int")) {
-                fila.tipoAtributo = "Integer";
-            }else if (myRs.getString("Data_Type").startsWith("varchar")) {
-                fila.tipoAtributo = "String";
-            }else if (myRs.getString("Data_Type").startsWith("date")) {
-                fila.tipoAtributo = "Date";
-            }else if (myRs.getString("Data_Type").startsWith("enum")) {
-                fila.tipoAtributo = "Enum";
-            }else if (myRs.getString("Data_Type").startsWith("char")) {
-                fila.tipoAtributo = "String";
-            }
-            fila.valortipoAtributo = myRs.getString("Data_Type");
-            fila.notNullCheckbox = myRs.getString("Allow_Empty").equals("NO");
-            fila.CheckBoxUnique = fila.pkCheckcbox= myRs.getString("PK").equals("PRI");
-            if (!fila.CheckBoxUnique) {
-                fila.CheckBoxUnique = myRs.getString("PK").equals("UNI");
-            }
-            detalles.add(fila);
-        }
-            detalle =  new FormValue(name, detalles);
-
-    }
-        catch (Exception e){
-        e.printStackTrace();
-    }
-
-
-//        FormValue tabla = null;
-//        for (FormValue formvalue : Data.tablas) {
-//            if (formvalue.nombreTabla.equals(name)) {
-//                tabla = formvalue;
+//            Form fila = new Form();
+//            fila.nombre = myRs.getString("Field_Name");
+//            if (myRs.getString("Data_Type").startsWith("tinyint")) {
+//                fila.tipoAtributo = "Boolean";
+//            } else if (myRs.getString("Data_Type").startsWith("int")) {
+//                fila.tipoAtributo = "Integer";
+//            }else if (myRs.getString("Data_Type").startsWith("varchar")) {
+//                fila.tipoAtributo = "String";
+//            }else if (myRs.getString("Data_Type").startsWith("date")) {
+//                fila.tipoAtributo = "Date";
+//            }else if (myRs.getString("Data_Type").startsWith("enum")) {
+//                fila.tipoAtributo = "Enum";
 //            }
+//            fila.valortipoAtributo = myRs.getString("Data_Type");
+//            fila.notNullCheckbox = myRs.getString("Allow_Empty").equals("NO");
+//            fila.CheckBoxUnique = fila.pkCheckcbox= myRs.getString("PK").equals("PRI");
+//            if (!fila.CheckBoxUnique) {
+//                fila.CheckBoxUnique = myRs.getString("PK").equals("UNI");
+//            }
+//            detalles.add(fila);
+//        }
+//            detalle =  new FormValue(name, false, detalles);
+//
+//    }
+//        catch (Exception e){
+//        e.printStackTrace();
+//    }
+
+
+        FormValue tabla = null;
+        for (FormValue formvalue : Data.tablas) {
+            if (formvalue.nombreTabla.equals(name)) {
+                tabla = formvalue;
+            }
+        }
+
+//        return FormUpdate.data("tablaDetalle", detalle).data("tipoAtributos", Data.obtenerAtributos());
+        return FormUpdate.data("tablaDetalle", tabla).data("tipoAtributos", Data.obtenerAtributos());
+    }
+
+    @POST
+    @Path("/create/group")
+    public boolean CrearGroupTable(ArrayList<String> nombreTablas) {
+        for (String nombre: nombreTablas) {
+            System.out.println(nombre);
+        }
+        //      Databasename_g; Variable Global para guardar el nombre de la base de datos!!
+//        ArrayList<String> nombres = new ArrayList<>();
+//        try {
+////            Get Connection to DB
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Connection myconnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + databasename_g, "root", "12345678");
+//
+//            //Create a Statement
+//            Statement dictoStatement = myconnection.createStatement();
+//            System.out.println("Conectado correctamente a la Base de Datos antes de show all tables");
+//            String queryalltables = "SELECT table_name\n" +
+//                            "FROM information_schema.tables\n" +
+//                            "WHERE table_schema ='" + databasename_g +"'"+
+//                            "\nORDER BY table_name;";
+//
+//
+//            //Execute SQL query
+////        System.out.println(queryalltables);
+//            ResultSet myRs = dictoStatement.executeQuery(queryalltables);
+////             nombres = myRs.getArray("table_name").;
+////            ArrayList<String> nombres = new ArrayList<>();
+//            //Process the result set
+//            while (myRs.next()) {
+//                nombres.add(myRs.getString("table_name"));
+//                System.out.println(myRs.getString("table_name"));
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
 //        }
 
-        return FormUpdate.data("tablaDetalle", detalle).data("tipoAtributos", Data.obtenerAtributos());
+//        String path = System.getProperty("user.dir");
+//        for (FormValue formValue : Data.tablas) {
+//            String clase = formValue.getNombreTabla().substring(0, 1).toUpperCase() + formValue.getNombreTabla().substring(1).toLowerCase();
+//            File myObj = new File(path + "/" + nombre + "/src/main/java/org/proyecto/Entity/" + clase + ".java");
+//            if (myObj.exists()){
+//                formValue.creado = true;
+//            }
+//        }
+        return true;
     }
 
     @POST
