@@ -33,7 +33,11 @@
                     <label for="tname">Table Name:</label><br>
                     <input type="text" id="tname" name="tname" value="{tablaDetalle.nombreTabla}"><br>
                 </form>
-
+                <div>
+                    <div class="input-group">
+                        <a href="/api/db/table">Back to others tables</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -283,7 +287,8 @@
             }).done(function(data) {
                 console.log("Data sent successfully");
                 console.log(data);
-                window.location.reload();
+                window.location.href="/api/db/table"
+                // window.location.reload();
             }).error(function (jqXhr, textStatus, errorMessage) {
                 console.log("Error sending data");
                 console.log(jqXhr);
@@ -292,32 +297,33 @@
             });
         });
         $('#createapp').click(function () {
-            // var arr = [];
-            // var tname = $("#tname").val();
-            // $('#tab_logic').find('tr').each(function (index) {
-            //     var row = $(this);
-            //
-            //     if (index !== 0) {
-            //         var obj = {
-            //             nombre:  row.find("#nombre").val(),
-            //             tipoAtributo: row.find("#tipoatributo").val(),
-            //             pkCheckcbox: row.find("#pkcheckbox").is(':checked'),
-            //             notNullCheckbox:  row.find("#notnullcheckbox").is(':checked') ,
-            //             // fkCheckbox: row.find("#fkcheckbox").is(':checked'),
-            //         }
-            //         arr.push(obj);
-            //     }
-            // });
-            //
-            // const data = {
-            //     nombreTabla : tname,
-            //     filas : arr
-            // }
-            // const jsonData = JSON.stringify(data);
+            // alert("Button Working");
+            var arr = [];
+            var tname = $("#tname").val();
+            $('#tab_logic').find('tr').each(function (index) {
+                var row = $(this);
+
+                if (index !== 0) {
+                    var obj = {
+                        nombre:  row.find("#nombre").val(),
+                        tipoAtributo: row.find("#tipoatributo").val(),
+                        pkCheckcbox: row.find("#pkcheckbox").is(':checked'),
+                        notNullCheckbox:  row.find("#notnullcheckbox").is(':checked') ,
+                        // fkCheckbox: row.find("#fkcheckbox").is(':checked'),
+                    }
+                    arr.push(obj);
+                }
+            });
+
+            const data = {
+                nombreTabla : tname,
+                filas : arr
+            }
+            const jsonData = JSON.stringify(data);
 
             $.ajax({
                 type: "POST",
-                url: '/api/create-app',
+                url: '/api/createapp',
                 contentType: 'application/json',
                 data: jsonData,
                 dataType: 'json'

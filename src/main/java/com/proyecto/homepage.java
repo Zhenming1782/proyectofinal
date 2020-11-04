@@ -63,7 +63,7 @@ public class homepage {
     }
 
     String nombre = "";
-    String databasename_g ="employees";
+    String databasename_g;
 
     @GET
     public TemplateInstance Homepage() {
@@ -258,7 +258,7 @@ public class homepage {
     }
 
     @GET
-    @Path("/db/name")
+    @Path("/db")
     //Vista para el input para introducir el nombre de la DB!
     public TemplateInstance DBNameView() {
 
@@ -266,7 +266,7 @@ public class homepage {
     }
 
     @POST
-    @Path("/db/name")
+    @Path("/db")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
     //Funcion para leer el nombre de la base de datos!
@@ -736,6 +736,7 @@ public class homepage {
 //                    + " -- not null " + form.isNotNullCheckbox() + " -- Unique" + form.isCheckBoxUnique());
 ////            + form.isFkCheckbox()
 //        }
+
         String nomb;
         String clase;
         String atributo;
@@ -764,8 +765,8 @@ public class homepage {
 
             //Entity details
             for (Form form : formValue.getFilas()) {
-                System.out.println("nombre " + form.getNombre() + " -- tipo " + form.getTipoAtributo() + " -- pkchekbox " + form.isPkCheckcbox()
-                        + " -- not null " + form.isNotNullCheckbox() + "-- fk " + form.isCheckBoxUnique() +"--Unique" + form.isFkCheckbox());
+//                System.out.println("nombre " + form.getNombre() + " -- tipo " + form.getTipoAtributo() + " -- pkchekbox " + form.isPkCheckcbox()
+//                        + " -- not null " + form.isNotNullCheckbox() + "-- fk " + form.isCheckBoxUnique() +"--Unique" + form.isFkCheckbox());
 
 
                 ///////////////////////////////////
