@@ -69,7 +69,7 @@
             <tr>
                 <td>{tabla.nombreTabla}<input type="hidden" id="nombre" value="{tabla.nombreTabla}"></td>
 <!--                <td>{tabla}</td>-->
-                <td><a href="/api/form/update/{tabla}">Ver</a></td>
+                <td><a href="/api/form/update/{tabla.nombreTabla}">Ver</a></td>
                 {#if tabla.creado == true}
                     <td class="mt-2 badge badge-success" title="Esta tabla ya está generada">
                         Tabla Generada<input type="hidden" id="generado" value="1">
