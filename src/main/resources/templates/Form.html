@@ -84,7 +84,8 @@
                             </select>
                         </td>
                         <td data-name="pkcheckbox">
-                            <input type="checkbox" id="pkcheckbox" name="pkcheckbox" value="1" onclick="myFunction()">
+<!--                            <input type="checkbox" id="pkcheckbox" name="pkcheckbox" value="1" onclick="myFunction()">-->
+                            <input type="checkbox" id="pkcheckbox" name="pkcheckbox" value="1" onclick="QuitarTexto()">
                         </td>
                         <td data-name="notnullcheckbox">
                             <input type="checkbox" id="notnullcheckbox" name="notnullcheckbox" value="1">
@@ -92,18 +93,20 @@
                         <td data-name="uniquecheckbox">
                             <input type="checkbox" id="uniquecheckbox" name="uniquecheckbox" value="1">
                         </td>
+
                         <td data-name="fkoption">
-                            <select name="fkoption" id="fkoption" onchange="showDiv('relationhidden', this)">
+                            <select name="fkoption" id="fkoption" onchange="showDiv($(this).closest('tr').index())">
                                 <option value="0">None</option>
-                                <option value="Table1">Table1</option>
-                                <option value="Table2">Table2</option>
+                                {#for tabla in tablasCreadas}
+                                    <option value="{tabla}">{tabla}</option>
+                                {/for}
                             </select>
                         </td>
-                        <td data-name="relationoption">
-                        <select id="relationhidden">
-                            <option value="One to One">One to One</option>
-                            <option value="One to Many">One to Many</option>
-                        </select>
+                        <td data-name="relationoption" >
+                            <select id="fkRelacion" style="display: none">
+                                <option value="One to One">One to One</option>
+                                <option value="One to Many">One to Many</option>
+                            </select>
                         </td>
                     </form>
                         <td data-name="del">
@@ -119,26 +122,40 @@
         </div>
         <a id="createapp" class="btn btn-primary float-right">Create APP</a>
         <a id="enviardatos" class="btn btn-primary float-right">Create Another Table</a>
-</div>
+    </div>
 </body>
 </html>
 <script>
-    //FK show relation select
-    function showDiv(divId, element)
+
+    function showDiv(rowIndex)
     {
-        document.getElementById(divId).style.display = element.value != 0 ? 'block' : 'none';
+        $('#tab_logic').find('tr').each(function (index) {
+            var row = $(this);
+
+            if (index === rowIndex) {
+                if (row.find("#fkoption").val() !== '0') {
+                    row.find("#fkRelacion").show();
+                }else {
+                    row.find("#fkRelacion").hide();
+                }
+            }
+        });
     }
 
-    //Primary Key check show the text
-    function myFunction() {
-        var checkBox = document.getElementById("pkcheckbox");
+    function QuitarTexto() {
         var text = document.getElementById("text");
-        if (checkBox.checked == false){
-            text.style.display = "block";
-        } else {
-            text.style.display = "none";
-        }
+        text.style.display = "block";
+        $('#tab_logic').find('tr').each(function (index) {
+            var row = $(this);
+
+            var check = row.find("#pkcheckbox");
+            if (check.is(':checked') === true) {
+                text.style.display = "none";
+            }
+        });
     }
+
+
     $(document).ready(function () {
         $("#add_row").on("click", function () {
 // Dynamic Rows Code
@@ -241,6 +258,8 @@
                         notNullCheckbox:  row.find("#notnullcheckbox").is(':checked') ,
                         CheckBoxUnique:  row.find("#uniquecheckbox").is(':checked') ,
                         // fkCheckbox: row.find("#fkcheckbox").is(':checked'),
+                        fkTablaRelacionada:  row.find("#fkoption").val(),
+                        fkRelacion:  row.find("#fkRelacion").val(),
                     }
                     arr.push(obj);
                 }
@@ -269,6 +288,7 @@
                 console.log(textStatus);
             });
         });
+
         $('#createapp').click(function () {
             alert("Entrando el boton")
             var arr = [];
@@ -283,6 +303,8 @@
                         pkCheckcbox: row.find("#pkcheckbox").is(':checked'),
                         notNullCheckbox:  row.find("#notnullcheckbox").is(':checked') ,
                         // fkCheckbox: row.find("#fkcheckbox").is(':checked'),
+                        fkTablaRelacionada:  row.find("#fkoption").val(),
+                        fkRelacion:  row.find("#fkRelacion").val(),
                     }
                     arr.push(obj);
                 }
@@ -292,6 +314,7 @@
                 nombreTabla : tname,
                 filas : arr
             }
+
             const jsonData = JSON.stringify(data);
 
             $.ajax({

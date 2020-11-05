@@ -602,7 +602,9 @@ public class homepage {
     @GET
     @Path("/form")
     public TemplateInstance TableCreation() {
-        return Form.data("title", "Table Creation").data("tipoAtributos", Data.obtenerAtributos());
+        return Form.data("title", "Table Creation")
+                .data("tipoAtributos", Data.obtenerAtributos())
+                .data("tablasCreadas", Data.TablasCreadas());
     }
 
     @GET

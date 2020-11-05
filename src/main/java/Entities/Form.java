@@ -7,9 +7,36 @@ public class Form {
     public boolean pkCheckcbox;
     public boolean notNullCheckbox;
     public boolean CheckBoxUnique;
-    public boolean fkCheckbox;
+    public String fkTablaRelacionada;
+    public String fkRelacion;
 
     public Form() {
+    }
+
+    public Form(String nombre, String tipoAtributo, boolean pkCheckcbox, boolean notNullCheckbox, boolean checkBoxUnique, String fkTablaRelacionada, String fkRelacion) {
+        this.nombre = nombre;
+        this.tipoAtributo = tipoAtributo;
+        this.pkCheckcbox = pkCheckcbox;
+        this.notNullCheckbox = notNullCheckbox;
+        this.CheckBoxUnique = checkBoxUnique;
+        this.fkTablaRelacionada = fkTablaRelacionada;
+        this.fkRelacion = fkRelacion;
+    }
+
+    public String getFkTablaRelacionada() {
+        return fkTablaRelacionada;
+    }
+
+    public void setFkTablaRelacionada(String fkTablaRelacionada) {
+        this.fkTablaRelacionada = fkTablaRelacionada;
+    }
+
+    public String getFkRelacion() {
+        return fkRelacion;
+    }
+
+    public void setFkRelacion(String fkRelacion) {
+        this.fkRelacion = fkRelacion;
     }
 
     public String getNombre() {
@@ -30,15 +57,6 @@ public class Form {
 
     public void setValortipoAtributo(String valortipoAtributo) {
         this.valortipoAtributo = valortipoAtributo;
-    }
-
-    public Form(String nombre, String tipoAtributo, boolean pkCheckcbox, boolean notNullCheckbox, boolean checkBoxUnique, boolean fkCheckbox) {
-        this.nombre = nombre;
-        this.tipoAtributo = tipoAtributo;
-        this.pkCheckcbox = pkCheckcbox;
-        this.notNullCheckbox = notNullCheckbox;
-        CheckBoxUnique = checkBoxUnique;
-        this.fkCheckbox = fkCheckbox;
     }
 
     public void setTipoAtributo(String tipoAtributo) {
@@ -67,13 +85,5 @@ public class Form {
 
     public void setCheckBoxUnique(boolean checkBoxUnique) {
         CheckBoxUnique = checkBoxUnique;
-    }
-
-    public boolean isFkCheckbox() {
-        return fkCheckbox;
-    }
-
-    public void setFkCheckbox(boolean fkCheckbox) {
-        this.fkCheckbox = fkCheckbox;
     }
 }
